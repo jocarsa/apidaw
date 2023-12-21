@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+    <head>
+    </head>
+    <body>
+        <script>
+            fetch("http://127.0.0.1/apidaw/003-Ejemplo%20PHP-HTML/servidor.php")
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(datos){
+                console.log(datos)
+                for(let i = 0;i<datos.length;i++){
+                    document.write(datos[i].nombre+"<br>")
+                }
+            })
+        </script>
+    </body>
+</html>
