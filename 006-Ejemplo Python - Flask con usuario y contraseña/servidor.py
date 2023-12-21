@@ -1,3 +1,4 @@
+# pip install Flask Flask-HTTPAuth
 from flask import Flask, request, jsonify
 from flask_httpauth import HTTPBasicAuth
 
