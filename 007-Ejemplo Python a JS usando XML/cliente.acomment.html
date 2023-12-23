@@ -1,0 +1,76 @@
+Este bloque de código HTML y JavaScript representa una página web que utiliza JavaScript para realizar solicitudes HTTP a una API que devuelve datos XML. Luego, parsea los datos XML y los muestra en la página web. Aquí tienes una explicación paso a paso:
+
+### Estructura HTML Básica
+```html
+<!doctype html>
+<html>
+    <head>
+    </head>
+    <body>
+        <div id="clientes"></div>
+        <div id="productos"></div>
+        <!-- ... -->
+    </body>
+</html>
+```
+- Esta es una estructura HTML básica que incluye un `<div>` con los IDs "clientes" y "productos". Estos divs se utilizarán para mostrar los datos XML recuperados de la API.
+
+### JavaScript para Realizar Solicitudes HTTP
+```javascript
+<script>
+    // Function to parse XML response
+    function parseXML(xml) {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xml, "text/xml");
+        return xmlDoc;
+    }
+```
+- En esta parte, se define una función llamada `parseXML(xml)` que toma una cadena XML como argumento y la convierte en un documento XML procesable utilizando el objeto `DOMParser`. Luego, devuelve el documento XML.
+
+### Solicitud HTTP para Datos de Clientes
+```javascript
+    fetch("http://127.0.0.1:8080/clientes?id=001")
+    .then(response => {
+        return response.text(); // Read the response as text
+    })
+    .then(data => {
+        console.log(data);
+        const xmlDoc = parseXML(data);
+        console.log(xmlDoc)
+        const clientes = xmlDoc.getElementsByTagName("cliente");
+        const clientesDiv = document.getElementById("clientes");
+
+        for (let i = 0; i < clientes.length; i++) {
+            const nombre = clientes[i].getElementsByTagName("nombre")[0].textContent;
+            clientesDiv.innerHTML += nombre + "<br>";
+        }
+    });
+```
+- En esta sección, se utiliza la función `fetch` para realizar una solicitud HTTP GET a la URL "http://127.0.0.1:8080/clientes?id=001". Esto obtiene datos XML del servidor.
+- Luego, se utiliza `.then()` para manejar la respuesta. Primero, se lee la respuesta como texto y se almacena en la variable `data`. Luego, se utiliza la función `parseXML()` para convertir `data` en un documento XML procesable.
+- Se accede a los elementos XML utilizando `getElementsByTagName()` y se muestra la información de los clientes en el `<div>` con ID "clientes".
+
+### Solicitud HTTP para Datos de Productos
+```javascript
+    fetch("http://127.0.0.1:8080/productos")
+    .then(response => {
+        return response.text(); // Read the response as text
+    })
+    .then(data => {
+        console.log(data);
+        const xmlDoc = parseXML(data);
+
+        const productos = xmlDoc.getElementsByTagName("producto");
+        const productosDiv = document.getElementById("productos");
+
+        for (let i = 0; i < productos.length; i++) {
+            const nombre = productos[i].getElementsByTagName("nombre")[0].textContent;
+            productosDiv.innerHTML += nombre + "<br>";
+        }
+    });
+</script>
+```
+- Esta parte del código realiza una solicitud HTTP similar a la anterior, pero esta vez a la URL "http://127.0.0.1:8080/productos" para obtener datos de productos.
+- La respuesta se maneja de manera similar, se analiza como texto y luego se convierte en un documento XML. Luego, se accede a los elementos XML y se muestra la información de los productos en el `<div>` con ID "productos".
+
+En resumen, este código HTML y JavaScript crea una página web que solicita datos XML de una API utilizando JavaScript, analiza esos datos y los muestra en la página web. Esto es útil para interactuar con servicios web que devuelven datos en formato XML.

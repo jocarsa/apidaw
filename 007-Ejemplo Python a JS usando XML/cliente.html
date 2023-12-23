@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+    <head>
+    </head>
+    <body>
+        <div id="clientes"></div>
+        <div id="productos"></div>
+        <script>
+            // Function to parse XML response
+            function parseXML(xml) {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xml, "text/xml");
+                return xmlDoc;
+            }
+
+            // Fetch XML data for clientes
+            fetch("http://127.0.0.1:8080/clientes?id=001")
+            .then(response => {
+                return response.text(); // Read the response as text
+            })
+            .then(data => {
+                console.log(data);
+                const xmlDoc = parseXML(data);
+                console.log(xmlDoc)
+                const clientes = xmlDoc.getElementsByTagName("cliente");
+                const clientesDiv = document.getElementById("clientes");
+
+                for (let i = 0; i < clientes.length; i++) {
+                    const nombre = clientes[i].getElementsByTagName("nombre")[0].textContent;
+                    clientesDiv.innerHTML += nombre + "<br>";
+                }
+            });
+
+            // Fetch XML data for productos
+            fetch("http://127.0.0.1:8080/productos")
+            .then(response => {
+                return response.text(); // Read the response as text
+            })
+            .then(data => {
+                console.log(data);
+                const xmlDoc = parseXML(data);
+
+                const productos = xmlDoc.getElementsByTagName("producto");
+                const productosDiv = document.getElementById("productos");
+
+                for (let i = 0; i < productos.length; i++) {
+                    const nombre = productos[i].getElementsByTagName("nombre")[0].textContent;
+                    productosDiv.innerHTML += nombre + "<br>";
+                }
+            });
+        </script>
+    </body>
+</html>

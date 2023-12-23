@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+    <head>
+    </head>
+    <body>
+        <div id="clientes"></div>
+        <div id="productos"></div>
+        <script>
+            // Voy a pedir los clientes a una API
+            fetch("http://127.0.0.1:8080/clientes")
+            .then(response => {
+                return response.json();
+              })
+              .then(data => {
+                console.log(data);
+                for(let i = 0;i<data.length;i++){
+                    document.getElementById("clientes").innerHTML += data[i].nombre+"<br>"
+                }
+              })
+            // Voy a pedir los productos a una API
+            fetch("http://127.0.0.1:8080/productos")
+            .then(response => {
+                return response.json();
+              })
+              .then(data => {
+                console.log(data);
+                for(let i = 0;i<data.length;i++){
+                    document.getElementById("productos").innerHTML += data[i].nombre+"<br>"
+                }
+              })
+        </script>
+    </body>
+</html>

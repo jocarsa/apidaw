@@ -1,0 +1,77 @@
+Este código es un ejemplo sencillo de HTML con un script de JavaScript incorporado. El propósito principal del script es obtener datos desde un archivo PHP ubicado en un servidor local y mostrar estos datos en la página web. A continuación, te explico cada parte del código paso a paso:
+
+1. **Doctype HTML**:
+   ```html
+   <!doctype html>
+   ```
+   Esta línea declara el tipo de documento. Aquí se especifica que el documento es HTML5, que es la versión actual del estándar HTML.
+
+2. **Inicio del documento HTML**:
+   ```html
+   <html>
+   ```
+   Indica el comienzo del documento HTML.
+
+3. **Sección Head**:
+   ```html
+   <head>
+   </head>
+   ```
+   La etiqueta `<head>` contiene metadatos y es usada para enlazar hojas de estilo, scripts y otra información que no es visible directamente en la página web. En este caso, está vacía.
+
+4. **Cuerpo del Documento (Body)**:
+   ```html
+   <body>
+   ```
+   Aquí comienza el cuerpo del documento, que contiene todo el contenido visible de la página web.
+
+5. **Script JavaScript**:
+   ```html
+   <script>
+   ```
+   Esta etiqueta indica el inicio de un bloque de código JavaScript.
+
+   a. **Fetch API**:
+      ```javascript
+      fetch("http://127.0.0.1/apidaw/003-Ejemplo%20PHP-HTML/servidor.php")
+      ```
+      `fetch` es una función de JavaScript que facilita realizar solicitudes HTTP a servidores web. En este caso, se está realizando una solicitud GET a la URL especificada, que apunta a un archivo PHP en un servidor local.
+
+   b. **Manejo de la Respuesta**:
+      ```javascript
+      .then(function(response){
+          return response.json();
+      })
+      ```
+      Cuando `fetch` recibe la respuesta del servidor, pasa esta respuesta a la primera función `.then()`. Esta función convierte la respuesta en un objeto JSON usando `response.json()`.
+
+   c. **Procesamiento de Datos JSON**:
+      ```javascript
+      .then(function(datos){
+          console.log(datos)
+          for(let i = 0; i < datos.length; i++){
+              document.write(datos[i].nombre + "<br>")
+          }
+      })
+      ```
+      La segunda función `.then()` recibe el objeto JSON. Primero, imprime estos datos en la consola del navegador (útil para depuración). Luego, itera sobre cada elemento del array JSON (asumiendo que `datos` es un array), escribe el nombre de cada elemento en el documento HTML, seguido de un salto de línea (`<br>`).
+
+6. **Fin del Script JavaScript**:
+   ```html
+   </script>
+   ```
+   Esto marca el final del bloque de código JavaScript.
+
+7. **Fin del Cuerpo del Documento**:
+   ```html
+   </body>
+   ```
+   Cierra la etiqueta `<body>`, que encierra todo el contenido visible de la página.
+
+8. **Fin del Documento HTML**:
+   ```html
+   </html>
+   ```
+   Cierra la etiqueta `<html>`, indicando el final del documento HTML.
+
+Este código HTML/JavaScript realiza una operación asincrónica para obtener datos de un servidor PHP y luego muestra esos datos en la página web. Es un ejemplo básico de cómo se puede usar JavaScript para interactuar con un backend y actualizar dinámicamente el contenido de una página web.
